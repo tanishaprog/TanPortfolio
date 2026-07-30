@@ -13,8 +13,8 @@ import { FOLDERS } from "../data/folders";
 
 // A window has: id, type, folderId (for finder), z, minimized
 const initialWindows = [
-    { id: "safari", type: "safari", z: 3, minimized: false, x: 340, y: 54, w: 1080, h: 720 },
-    { id: "notes", type: "notes", z: 2, minimized: false, x: 130, y: 84, w: 440, h: 340 },
+    { id: "safari", type: "safari", z: 3, minimized: false, x: 380, y: 54, w: 1080, h: 720 },
+    { id: "notes", type: "notes", z: 4, minimized: false, x: 430, y: 100, w: 440, h: 340 },
 ];
 
 export default function Desktop() {
@@ -173,9 +173,9 @@ export default function Desktop() {
             <Wallpaper />
             <MenuBar />
 
-            {/* Left column: desktop folders */}
+            {/* Right column: desktop folders */}
             <div
-                className="absolute left-4 top-9 flex flex-col gap-1 items-center z-[10]"
+                className="absolute right-4 top-9 flex flex-col gap-1 items-center z-[10]"
                 data-testid="desktop-folders"
             >
                 {FOLDERS.map((f) => (
@@ -189,9 +189,9 @@ export default function Desktop() {
                 ))}
             </div>
 
-            {/* Widgets: RIGHT column — Substack (wide) → Pinterest → Sticky */}
+            {/* Widgets: LEFT column — Substack (wide) → Pinterest → Sticky */}
             <div
-                className="absolute right-5 top-9 flex flex-col gap-3 z-[10]"
+                className="absolute left-5 top-9 flex flex-col gap-5 z-[10]"
                 data-testid="desktop-widgets"
             >
                 <SubstackWidget />
