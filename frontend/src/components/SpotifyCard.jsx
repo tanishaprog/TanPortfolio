@@ -1,14 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Window from "./Window";
 import { Play, ArrowUpRight, Music } from "lucide-react";
 import { SPOTIFY } from "../data/aboutMe";
 
-// Compact Spotify-style floating player. NOT an iframe embed — hand-designed
-// card that shows album art, title, artist, Spotify branding, and Open link.
+// Fetches title + album art from Spotify's public oembed endpoint.
+// The Spotify URL is the single source of truth — do not hardcode metadata.
+function useSpotifyMeta(openUrl) {
+    const [meta, setMeta] = useState({
+        loading: true,
+        art: null,
+        title: null,
+        subtitle: null,
+    });
+
+    useEffect(() => {
+        if (!openUrl) return;
+        let cancelled = false;
+        const controller = new AbortController();
+        fetch(
+            `https://open.spotify.com/oembed?url=${encodeURIComponent(openUrl)}`,
+            { signal: controller.signal },
+        )
+            .then((r) => (r.ok ? r.json() : Promise.reject(new Error("oembed failed"))))
+            .then((data) => {
+                if (cancelled) return;
+                setMeta({
+                    loading: false,
+                    art: data.thumbnail_url || null,
+                    title: data.title || null,
+                    subtitle: data.provider_name || "Spotify",
+                });
+            })
+            .catch(() => {
+                if (cancelled) return;
+                setMeta((s) => ({ ...s, loading: false }));
+            });
+        return () => {
+            cancelled = true;
+            controller.abort();
+        };
+    }, [openUrl]);
+
+    return meta;
+}
+
+// Compact Spotify-style floating player. NOT an iframe embed — the artwork,
+// title and destination URL all come from the same source (Spotify oembed).
 // `variant` = "song" | "podcast"
 export default function SpotifyCard({ variant = "song", ...props }) {
     const item = SPOTIFY[variant];
+    const meta = useSpotifyMeta(item.open);
     const gradient = `linear-gradient(160deg, ${item.gradient[0]} 0%, ${item.gradient[1]} 100%)`;
+    const fallbackSubtitle =
+        item.kind === "podcast" ? "podcast · Spotify" : "Spotify";
 
     return (
         <Window
@@ -28,15 +72,16 @@ export default function SpotifyCard({ variant = "song", ...props }) {
             >
                 {/* Album art */}
                 <div
-                    className="w-[76px] h-[76px] rounded-[5px] shrink-0 flex items-center justify-center shadow-[0_6px_14px_-6px_rgba(0,0,0,0.6)]"
-                    style={{ background: item.art ? undefined : gradient }}
+                    className="w-[76px] h-[76px] rounded-[5px] shrink-0 flex items-center justify-center shadow-[0_6px_14px_-6px_rgba(0,0,0,0.6)] overflow-hidden"
+                    style={{ background: meta.art ? "#000" : gradient }}
                 >
-                    {item.art ? (
+                    {meta.art ? (
                         <img
-                            src={item.art}
+                            src={meta.art}
                             alt=""
-                            className="w-full h-full object-cover rounded-[5px]"
+                            className="w-full h-full object-cover"
                             draggable={false}
+                            data-testid={`spotify-art-${variant}`}
                         />
                     ) : (
                         <Music size={28} className="text-white/85" strokeWidth={1.5} />
@@ -50,10 +95,18 @@ export default function SpotifyCard({ variant = "song", ...props }) {
                             className="text-[14px] font-semibold text-white leading-tight truncate"
                             data-testid={`spotify-title-${variant}`}
                         >
-                            {item.title}
+                            {meta.loading ? (
+                                <span className="inline-block w-32 h-3.5 bg-white/10 rounded animate-pulse" />
+                            ) : (
+                                meta.title || "Unavailable"
+                            )}
                         </div>
                         <div className="text-[12px] text-white/60 leading-tight truncate mt-[3px]">
-                            {item.artist}
+                            {meta.loading ? (
+                                <span className="inline-block w-20 h-3 bg-white/10 rounded animate-pulse" />
+                            ) : (
+                                meta.subtitle || fallbackSubtitle
+                            )}
                         </div>
                     </div>
                     <a

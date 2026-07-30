@@ -1,19 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Window from "./Window";
 import { Search, Plus, Share, PenLine } from "lucide-react";
-
-const DECORATIVE_NOTES = [
-    { id: "2am", title: "2 A.M. Ideas", date: "Today", preview: "" },
-    { id: "grocery", title: "grocery", date: "Yesterday", preview: "milk, coffee, mangoes, more coffee…" },
-    { id: "book", title: "books i want to finish", date: "12 Jan", preview: "Bluets · The Argonauts · Ways of Seeing…" },
-    { id: "cats", title: "cat vet dates", date: "10 Jan", preview: "next appointment: 22 Feb, 5 pm" },
-    { id: "movies", title: "films to rewatch", date: "3 Jan", preview: "In the Mood for Love · Perfect Days…" },
-    { id: "wishlist", title: "birthday wishlist", date: "27 Dec", preview: "a used typewriter · a good pen · that scarf" },
-];
+import { NOTES } from "../data/notes";
 
 export default function NotesWindow(props) {
-    const [selected, setSelected] = React.useState("2am");
-    const active = DECORATIVE_NOTES.find((n) => n.id === selected);
+    const [selectedId, setSelectedId] = useState(NOTES[0].id);
+    const active = NOTES.find((n) => n.id === selectedId) ?? NOTES[0];
 
     return (
         <Window
@@ -47,13 +39,13 @@ export default function NotesWindow(props) {
                         On My Mac
                     </div>
                     <div className="flex-1 overflow-auto mac-scroll">
-                        {DECORATIVE_NOTES.map((n) => (
+                        {NOTES.map((n) => (
                             <button
                                 key={n.id}
-                                onClick={() => setSelected(n.id)}
+                                onClick={() => setSelectedId(n.id)}
                                 data-testid={`note-${n.id}`}
                                 className={`w-full text-left px-3 py-2 border-l-2 ${
-                                    selected === n.id
+                                    selectedId === n.id
                                         ? "bg-[#f7c948]/70 border-[#c99b1a]"
                                         : "border-transparent hover:bg-black/[0.04]"
                                 }`}
@@ -73,27 +65,157 @@ export default function NotesWindow(props) {
                 </aside>
 
                 {/* Editor */}
-                <section className="flex-1 flex flex-col bg-[#fbfaf6]" data-testid="notes-editor">
+                <section
+                    className="flex-1 flex flex-col bg-[#fbfaf6]"
+                    data-testid="notes-editor"
+                >
                     <div className="h-8 border-b border-black/5 flex items-center justify-center text-[11px] text-[#8a8a8f]">
-                        {active?.date}
+                        {active.date}
                     </div>
                     <div className="flex-1 overflow-auto mac-scroll px-12 py-8">
-                        <h1 className="text-[22px] font-semibold text-[#1c1c1e]">
-                            {active?.title}
+                        <h1
+                            className="text-[22px] font-semibold text-[#1c1c1e]"
+                            data-testid="note-title"
+                        >
+                            {active.title}
                         </h1>
-                        {active?.id === "2am" ? (
-                            <div className="mt-6 text-[14.5px] leading-relaxed text-[#6a6a6f] italic serif">
-                                {/* Interactive but intentionally empty */}
-                                (this note is empty on purpose — tanisha will fill it in soon.)
-                            </div>
-                        ) : (
-                            <div className="mt-6 text-[14.5px] leading-relaxed text-[#3a3a3d]">
-                                {active?.preview}
-                            </div>
-                        )}
+                        <NoteBody note={active} />
                     </div>
                 </section>
             </div>
         </Window>
+    );
+}
+
+function NoteBody({ note }) {
+    if (note.kind === "empty") {
+        return (
+            <div
+                className="mt-6 text-[14.5px] leading-relaxed text-[#6a6a6f] italic serif"
+                data-testid={`note-body-${note.id}`}
+            >
+                {note.body}
+            </div>
+        );
+    }
+    if (note.kind === "list") {
+        return (
+            <ul
+                className="mt-6 space-y-1.5 text-[14.5px] leading-relaxed text-[#1c1c1e]"
+                data-testid={`note-body-${note.id}`}
+            >
+                {note.body.map((item, i) => (
+                    <li key={i} className="flex gap-2">
+                        <span className="text-[#8a8a8f]">•</span>
+                        <span>{item}</span>
+                    </li>
+                ))}
+            </ul>
+        );
+    }
+    if (note.kind === "checklist") {
+        return <NotesChecklist note={note} />;
+    }
+    if (note.kind === "sections") {
+        return (
+            <div
+                className="mt-6 text-[14.5px] leading-relaxed text-[#1c1c1e] space-y-6"
+                data-testid={`note-body-${note.id}`}
+            >
+                {note.body.map((section) => (
+                    <div key={section.heading}>
+                        <h2 className="text-[17px] font-semibold text-[#1c1c1e]">
+                            {section.heading}
+                        </h2>
+                        <ul className="mt-2 space-y-1.5">
+                            {section.items.map((item, i) => (
+                                <li key={i} className="flex gap-2">
+                                    <span className="text-[#8a8a8f]">•</span>
+                                    <span>{item}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+                {note.footer && (
+                    <p className="mt-6 text-[13.5px] italic text-[#6a6a6f]">
+                        {note.footer}
+                    </p>
+                )}
+            </div>
+        );
+    }
+    return null;
+}
+
+function NotesChecklist({ note }) {
+    const [items, setItems] = useState(note.body);
+    return (
+        <div className="mt-6" data-testid={`note-body-${note.id}`}>
+            <ul className="space-y-1.5 text-[14.5px] leading-relaxed">
+                {items.map((it, i) => (
+                    <li key={i} className="flex items-start gap-2.5">
+                        <NotesCheckbox
+                            checked={it.done}
+                            onClick={() =>
+                                setItems((prev) =>
+                                    prev.map((x, j) =>
+                                        j === i ? { ...x, done: !x.done } : x,
+                                    ),
+                                )
+                            }
+                            testid={`note-checkbox-${note.id}-${i}`}
+                        />
+                        <span
+                            className={
+                                it.done
+                                    ? "line-through text-[#8a8a8f] decoration-[#8a8a8f]/70"
+                                    : "text-[#1c1c1e]"
+                            }
+                        >
+                            {it.text}
+                        </span>
+                    </li>
+                ))}
+            </ul>
+            {note.footer && (
+                <p className="mt-6 text-[13.5px] italic text-[#6a6a6f]">
+                    {note.footer}
+                </p>
+            )}
+        </div>
+    );
+}
+
+function NotesCheckbox({ checked, onClick, testid }) {
+    return (
+        <button
+            role="checkbox"
+            aria-checked={checked}
+            onClick={onClick}
+            data-testid={testid}
+            className="shrink-0 mt-[3px]"
+        >
+            <svg width="16" height="16" viewBox="0 0 16 16">
+                <circle
+                    cx="8"
+                    cy="8"
+                    r="7"
+                    fill={checked ? "#f7c948" : "#ffffff"}
+                    stroke={checked ? "#c99b1a" : "#c8c8ce"}
+                    strokeWidth="1"
+                />
+                {checked && (
+                    <path
+                        d="M4.5 8.4 L7 10.6 L11.6 5.6"
+                        fill="none"
+                        stroke="#8a6a10"
+                        strokeWidth="1.7"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    />
+                )}
+            </svg>
+        </button>
     );
 }

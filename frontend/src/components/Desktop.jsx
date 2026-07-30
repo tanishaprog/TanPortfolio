@@ -22,13 +22,11 @@ const initialWindows = [
     { id: "notes", type: "notes", z: 4, minimized: false, x: 430, y: 100, w: 440, h: 340 },
 ];
 
-// Position spec for the six windows that appear when About Me is opened.
-// The user's brief: photo (upper left, background), aboutme.txt (center, front),
-// readinglist.txt (lower left, small), watchlist.txt (upper right, small),
-// spotify song (bottom right), podcast (upper right, near watchlist).
+// Position spec for the About Me set — 4 windows: portrait (background),
+// aboutme.txt (center/front), spotify song + podcast (right column).
 const ABOUT_ME_LAYOUT = [
     {
-        order: 0, // opens first (background layer)
+        order: 0,
         id: "preview-about-portrait",
         type: "preview-image",
         src: "/portrait-about.webp",
@@ -49,53 +47,29 @@ const ABOUT_ME_LAYOUT = [
         y: 120,
         w: 620,
         h: 560,
-        zOffset: 6, // front-most
+        zOffset: 4, // front-most
     },
     {
         order: 2,
-        id: "textedit-reading",
-        type: "textedit",
-        doc: "reading",
-        name: "readinglist.txt",
-        x: 80,
-        y: 550,
-        w: 380,
-        h: 300,
+        id: "spotify-song",
+        type: "spotify-card",
+        variant: "song",
+        x: 1240,
+        y: 260,
+        w: 360,
+        h: 144,
         zOffset: 2,
     },
     {
         order: 3,
-        id: "textedit-watchlist",
-        type: "textedit",
-        doc: "watchlist",
-        name: "watchlist.txt",
-        x: 1240,
-        y: 90,
-        w: 340,
-        h: 300,
-        zOffset: 3,
-    },
-    {
-        order: 4,
-        id: "spotify-song",
-        type: "spotify-card",
-        variant: "song",
-        x: 1220,
-        y: 660,
-        w: 360,
-        h: 144,
-        zOffset: 4,
-    },
-    {
-        order: 5,
         id: "spotify-podcast",
         type: "spotify-card",
         variant: "podcast",
-        x: 1220,
-        y: 420,
+        x: 1240,
+        y: 90,
         w: 360,
         h: 144,
-        zOffset: 5,
+        zOffset: 3,
     },
 ];
 

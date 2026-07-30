@@ -1,0 +1,27 @@
+{
+  "summary": "Frontend-only testing for Tanisha's macOS portfolio. Verified all 8 requested items: (1) Podcast Spotify card artwork + title now load real data from Spotify oembed (not placeholder). (2) Song card metadata matches destination URL (Mystery of Love / track 5GbVzc6Ex5LYlLJqzRQhuy). (3) About Me opens exactly 4 windows (portrait, aboutme.txt, spotify song, spotify podcast) with NO readinglist.txt / watchlist.txt windows. (4) Notes sidebar has exactly the 5 required notes; old cat-vet-dates / films-to-rewatch notes are gone. (5-8) Grocery, Books, Watch, Wishlist content all match spec including checkbox toggle behavior and section footers. All functional acceptance criteria met.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "MINOR NAMING MISMATCH (non-blocking): Review request references data-testids `window-preview-about-portrait`, `window-textedit-aboutme`, `window-spotify-song`, `window-spotify-podcast`. Actual rendered testids are `preview-portrait.jpg`, `textedit-aboutme`, `spotify-song`, `spotify-podcast` (each Window has an explicit `testid` prop that overrides the fallback `window-${id}` naming in Window.jsx line 78). The windows DO exist and are functionally correct — this is only a testid naming inconsistency vs the review-request spec. Suggest either (a) prefixing the testid with `window-` in Desktop.jsx / SpotifyCard.jsx / preview & textedit wrappers, OR (b) updating the review-request spec to reflect the actual convention. Not a user-visible bug.",
+    "MINOR CDN SUBSTRING NOTE: Review request expected Spotify art src to contain `i.scdn.co`. Spotify oembed currently returns URLs on `image-cdn-ak.spotifycdn.com` / `image-cdn-fa.spotifycdn.com` (also official Spotify CDN, different subdomain). Functionally correct — real Spotify-hosted artwork is loading, not a placeholder. If strict `i.scdn.co` matching is required in downstream tests, relax the assertion to `spotifycdn.com`."
+  ],
+  "critical_code_review_comments": [
+    "SpotifyCard.jsx correctly uses Spotify oembed as single source of truth for title + art, matches the destination URL — bug is properly fixed.",
+    "Desktop.jsx ABOUT_ME_LAYOUT correctly contains exactly 4 entries (preview-about-portrait, textedit-aboutme, spotify-song, spotify-podcast) — restructure is complete.",
+    "notes.js has clean 5-note array (2am, grocery, books, watch, wishlist) with correct content; no orphan legacy notes.",
+    "Non-blocking: The testid naming convention across Window children is inconsistent (some pass explicit testid overriding default window-${id}). Consider standardising to always include the `window-` prefix for the root Window element to make automated testing selectors predictable."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (frontend-only)", "frontend": "100% (all 8 acceptance criteria pass functionally; 2 minor naming notes documented)"},
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "App URL is https://desktop-explorer-1.preview.emergentagent.com. To test About Me flow, dblclick [data-testid='desktop-icon-about']. To test Notes, click [data-testid='dock-notes']. NOTE: The actual testids for windows opened by About Me are `preview-portrait.jpg`, `textedit-aboutme`, `spotify-song`, `spotify-podcast` — NOT prefixed with `window-`. Spotify oembed loads asynchronously; wait ~3-4s after opening About Me before asserting on spotify-art-* / spotify-title-*. Verified Spotify song title='Mystery of Love', href contains 5GbVzc6Ex5LYlLJqzRQhuy; podcast title='Moment of Silence for People dating AI', href contains 1pebCgK75J7OpVLb5cAwqq. Art loads from *.spotifycdn.com (not i.scdn.co).",
+  "rca_of_the_issue": "N/A — this iteration validated bug fixes rather than reproducing new bugs. Prior podcast placeholder and song/URL mismatch issues are fully resolved: SpotifyCard.jsx uses useSpotifyMeta() to fetch oembed data from the single-source-of-truth SPOTIFY.{song,podcast}.open URL, so title/art/link cannot get out of sync."
+}

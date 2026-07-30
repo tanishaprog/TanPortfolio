@@ -92,22 +92,17 @@ export const WATCHLIST_META = {
     footer: "this is my list.\nplease don't judge it too hard :)",
 };
 
-// Spotify song + podcast — compact card data (NOT an iframe embed).
-// Edit `title`, `artist`, `art` to change what shows on the cards.
+// Spotify song + podcast — the `open` URL is the single source of truth.
+// Title, artist and album art are fetched via Spotify's oembed API at runtime
+// (SpotifyCard.jsx). `gradient` is used only as a fallback while art loads.
 export const SPOTIFY = {
     podcast: {
         kind: "podcast",
-        title: "Moment of Silence",
-        artist: "podcast · episode",
-        art: null, // fallback gradient
         gradient: ["#2b1735", "#742d5a"],
         open: "https://open.spotify.com/episode/1pebCgK75J7OpVLb5cAwqq",
     },
     song: {
         kind: "song",
-        title: "on repeat",
-        artist: "add title & artist in data/aboutMe.js",
-        art: null,
         gradient: ["#1a3d2a", "#0b8b3e"],
         open: "https://open.spotify.com/track/5GbVzc6Ex5LYlLJqzRQhuy",
     },
