@@ -138,7 +138,7 @@ function FinderBody({ folder, onOpenFile }) {
     if (folder.body.kind === "contact")
         return <ContactPlaceholder folder={folder} />;
     if (folder.body.kind === "gallery")
-        return <GalleryPlaceholder folder={folder} />;
+        return <GalleryPlaceholder folder={folder} onOpenFile={onOpenFile} />;
     return null;
 }
 
@@ -276,7 +276,8 @@ function ContactPlaceholder({ folder }) {
     );
 }
 
-function GalleryPlaceholder({ folder }) {
+function GalleryPlaceholder({ folder, onOpenFile }) {
+    const [selected, setSelected] = useState(null);
     if (folder.body.images.length === 0) {
         return (
             <div className="h-full flex flex-col items-center justify-center gap-3 text-center px-8">
@@ -284,7 +285,7 @@ function GalleryPlaceholder({ folder }) {
                     <Cat size={30} className="text-[#8a8a8f]" strokeWidth={1.5} />
                 </div>
                 <div className="serif text-[22px] text-[#1c1c1e]">
-                    no cats yet
+                    nothing here yet
                 </div>
                 <div className="text-[13px] text-[#8a8a8f] max-w-sm">
                     {folder.body.emptyState}
@@ -296,10 +297,57 @@ function GalleryPlaceholder({ folder }) {
         );
     }
     return (
-        <div className="p-4 grid grid-cols-4 gap-1">
-            {folder.body.images.map((img, i) => (
-                <div key={i} className="aspect-square bg-black/5" />
-            ))}
+        <div
+            className="p-5 grid grid-cols-4 gap-3"
+            onClick={() => setSelected(null)}
+        >
+            {folder.body.images.map((img, i) => {
+                const isSel = selected === img.name;
+                return (
+                    <button
+                        key={img.name}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setSelected(img.name);
+                        }}
+                        onDoubleClick={(e) => {
+                            e.stopPropagation();
+                            onOpenFile?.(folder, {
+                                name: img.name,
+                                type: "img",
+                                openable: true,
+                                src: img.src,
+                            });
+                        }}
+                        data-testid={`gallery-${img.name}`}
+                        className="flex flex-col items-center gap-1 group"
+                    >
+                        <span
+                            className={`w-full aspect-square rounded-md overflow-hidden bg-[#e8e8ea] border ${
+                                isSel
+                                    ? "border-[#0a84ff] ring-2 ring-[#0a84ff]/40"
+                                    : "border-black/10"
+                            } shadow-sm`}
+                        >
+                            <img
+                                src={img.src}
+                                alt=""
+                                className="w-full h-full object-cover"
+                                draggable={false}
+                            />
+                        </span>
+                        <span
+                            className={`text-[11px] px-1.5 py-[1px] rounded-sm max-w-full truncate ${
+                                isSel
+                                    ? "bg-[rgba(10,132,255,0.85)] text-white"
+                                    : "text-[#1c1c1e]"
+                            }`}
+                        >
+                            {img.name}
+                        </span>
+                    </button>
+                );
+            })}
         </div>
     );
 }

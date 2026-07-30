@@ -31,15 +31,20 @@ export const FOLDERS = [
     },
     {
         id: "cat-pics",
-        name: "Cat Pics",
+        name: "Pixxxx💅",
         icon: "folder",
         color: "#f6c86b",
-        placeholder: true,
+        placeholder: false,
         body: {
             kind: "gallery",
-            images: [],
-            emptyState:
-                "The cats are asleep. Tanisha will upload their portraits soon.",
+            images: [
+                { name: "pix1.jpeg", src: "/pix1.jpeg" },
+                { name: "pix2.jpeg", src: "/pix2.jpeg" },
+                { name: "pix3.jpeg", src: "/pix3.jpeg" },
+                { name: "pix4.jpeg", src: "/pix4.jpeg" },
+                { name: "pix5.jpeg", src: "/pix5.jpeg" },
+            ],
+            emptyState: "nothing here yet.",
         },
     },
     {

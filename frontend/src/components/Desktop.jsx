@@ -171,10 +171,26 @@ export default function Desktop() {
         [pushWindow, windows, openAboutMeSet],
     );
 
-    const openFile = useCallback((folder, file) => {
-        if (!file.openable) return;
-        setPreview({ folder: folder.id, file });
-    }, []);
+    const openFile = useCallback(
+        (folder, file) => {
+            if (!file.openable) return;
+            if (file.type === "img" && file.src) {
+                pushWindow({
+                    id: `preview-${folder.id}-${file.name}`,
+                    type: "preview-image",
+                    src: file.src,
+                    name: file.name,
+                    x: 320 + Math.random() * 80,
+                    y: 90 + Math.random() * 40,
+                    w: 560,
+                    h: 640,
+                });
+                return;
+            }
+            setPreview({ folder: folder.id, file });
+        },
+        [pushWindow],
+    );
 
     const handleDockClick = useCallback(
         (item) => {
