@@ -170,7 +170,7 @@ export default function Desktop() {
             onClick={() => setSelectedIcon(null)}
             data-testid="desktop"
         >
-            <Wallpaper />
+            <Wallpaper customUrl="/wallpaper.png" />
             <MenuBar />
 
             {/* Right column: desktop folders */}
