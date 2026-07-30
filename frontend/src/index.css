@@ -137,6 +137,9 @@ body {
     font-size: 8px;
     color: rgba(0, 0, 0, 0.55);
     transition: filter 0.15s ease;
+    box-shadow:
+        inset 0 0 0 0.5px rgba(0, 0, 0, 0.28),
+        0 0.5px 0 rgba(255, 255, 255, 0.6);
 }
 .traffic-light svg {
     opacity: 0;
@@ -145,18 +148,22 @@ body {
 .traffic-lights:hover .traffic-light svg {
     opacity: 1;
 }
+.traffic-lights .traffic-light:active {
+    filter: brightness(0.85);
+}
 
 /* Window base */
 .mac-window {
-    background: rgba(246, 246, 246, 0.92);
-    backdrop-filter: saturate(180%) blur(30px);
-    -webkit-backdrop-filter: saturate(180%) blur(30px);
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 12px;
+    background: rgba(246, 246, 246, 0.94);
+    backdrop-filter: saturate(180%) blur(40px);
+    -webkit-backdrop-filter: saturate(180%) blur(40px);
+    border-radius: 11px;
     box-shadow:
-        0 0 0 0.5px rgba(255, 255, 255, 0.4) inset,
-        0 30px 60px -10px rgba(0, 0, 0, 0.35),
-        0 18px 30px -12px rgba(0, 0, 0, 0.25);
+        0 0 0 0.5px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.35) inset,
+        0 36px 60px -12px rgba(0, 0, 0, 0.38),
+        0 12px 26px -8px rgba(0, 0, 0, 0.25),
+        0 2px 4px rgba(0, 0, 0, 0.08);
     overflow: hidden;
 }
 
@@ -164,11 +171,12 @@ body {
     height: 38px;
     background: linear-gradient(
         180deg,
-        rgba(240, 240, 240, 0.85),
-        rgba(228, 228, 230, 0.75)
+        rgba(246, 246, 248, 0.78),
+        rgba(228, 228, 232, 0.72)
     );
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.14);
+    backdrop-filter: saturate(180%) blur(30px);
+    -webkit-backdrop-filter: saturate(180%) blur(30px);
 }
 
 /* Menu bar */
@@ -198,14 +206,16 @@ body {
 
 /* Dock */
 .dock {
-    background: rgba(255, 255, 255, 0.22);
-    backdrop-filter: saturate(180%) blur(30px);
-    -webkit-backdrop-filter: saturate(180%) blur(30px);
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(220, 220, 226, 0.42);
+    backdrop-filter: saturate(180%) blur(40px);
+    -webkit-backdrop-filter: saturate(180%) blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 22px;
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.45),
-        0 10px 30px rgba(0, 0, 0, 0.25);
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        inset 0 -0.5px 0 rgba(0, 0, 0, 0.08),
+        0 20px 40px -12px rgba(0, 0, 0, 0.35),
+        0 6px 14px -4px rgba(0, 0, 0, 0.2);
 }
 
 /* Selected desktop icon */

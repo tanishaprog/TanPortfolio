@@ -130,7 +130,7 @@ export default function Window({
                     </span>
                 </div>
 
-                <div className="flex-1 flex items-center justify-center gap-2 text-[13px] text-[#3a3a3d] font-medium select-none">
+                <div className="flex-1 flex items-center justify-center gap-2 text-[13px] text-[#3a3a3d] font-semibold select-none tracking-tight">
                     {icon}
                     <span className="truncate max-w-[60%]">{title}</span>
                 </div>

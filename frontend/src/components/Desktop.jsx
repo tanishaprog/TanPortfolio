@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { AnimatePresence } from "framer-motion";
 import Wallpaper from "./Wallpaper";
 import MenuBar from "./MenuBar";
@@ -13,8 +13,8 @@ import { FOLDERS } from "../data/folders";
 
 // A window has: id, type, folderId (for finder), z, minimized
 const initialWindows = [
-    { id: "safari", type: "safari", z: 3, minimized: false, x: 340, y: 48, w: 1100, h: 660 },
-    { id: "notes", type: "notes", z: 2, minimized: false, x: 60, y: 60, w: 520, h: 400 },
+    { id: "safari", type: "safari", z: 3, minimized: false, x: 340, y: 54, w: 1080, h: 720 },
+    { id: "notes", type: "notes", z: 2, minimized: false, x: 130, y: 84, w: 440, h: 340 },
 ];
 
 export default function Desktop() {
@@ -148,6 +148,22 @@ export default function Desktop() {
         ),
     ).filter(Boolean);
 
+    // IST day + weekday for the Calendar dock icon
+    const istDate = useMemo(() => {
+        const now = new Date();
+        const day = new Intl.DateTimeFormat("en-US", {
+            day: "numeric",
+            timeZone: "Asia/Kolkata",
+        }).format(now);
+        const weekday = new Intl.DateTimeFormat("en-US", {
+            weekday: "short",
+            timeZone: "Asia/Kolkata",
+        })
+            .format(now)
+            .toUpperCase();
+        return { day: parseInt(day, 10), weekday };
+    }, []);
+
     return (
         <div
             className="w-screen h-screen overflow-hidden relative"
@@ -159,7 +175,7 @@ export default function Desktop() {
 
             {/* Left column: desktop folders */}
             <div
-                className="absolute right-4 top-9 flex flex-col gap-2 items-center z-[10]"
+                className="absolute left-4 top-9 flex flex-col gap-1 items-center z-[10]"
                 data-testid="desktop-folders"
             >
                 {FOLDERS.map((f) => (
@@ -173,16 +189,14 @@ export default function Desktop() {
                 ))}
             </div>
 
-            {/* Widgets: bottom-left column */}
+            {/* Widgets: RIGHT column — Substack (wide) → Pinterest → Sticky */}
             <div
-                className="absolute left-5 bottom-24 flex flex-col gap-3 z-[10]"
+                className="absolute right-5 top-9 flex flex-col gap-3 z-[10]"
                 data-testid="desktop-widgets"
             >
-                <div className="flex items-end gap-3">
-                    <StickyNoteWidget />
-                    <SubstackWidget />
-                </div>
+                <SubstackWidget />
                 <PinterestWidget />
+                <StickyNoteWidget />
             </div>
 
             {/* Windows */}
@@ -218,7 +232,12 @@ export default function Desktop() {
                     })}
             </AnimatePresence>
 
-            <Dock onItemClick={handleDockClick} runningIds={runningIds} />
+            <Dock
+                onItemClick={handleDockClick}
+                runningIds={runningIds}
+                istDay={istDate.day}
+                istWeekday={istDate.weekday}
+            />
 
             <AnimatePresence>
                 {preview && (

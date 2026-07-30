@@ -1,5 +1,6 @@
 import React from "react";
-import { Folder, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
+import { TrashIcon } from "./DockIcons";
 
 /**
  * A single macOS-style desktop icon (folder or trash).
@@ -11,11 +12,9 @@ export default function DesktopIcon({
     onSelect,
     onOpen,
 }) {
-    const Icon = folder.icon === "trash" ? Trash2 : Folder;
-
     return (
         <button
-            className={`desktop-icon flex flex-col items-center gap-1 w-[92px] px-2 pt-2 pb-1 rounded-md ${
+            className={`desktop-icon flex flex-col items-center gap-1 w-[86px] px-1.5 pt-2 pb-1 rounded-md ${
                 isSelected ? "selected bg-white/10" : ""
             }`}
             onClick={(e) => {
@@ -30,11 +29,11 @@ export default function DesktopIcon({
         >
             <span className="relative">
                 {folder.icon === "trash" ? (
-                    <span className="w-14 h-14 rounded-2xl bg-gradient-to-b from-[#e6e6ea] to-[#b7b7bd] shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_2px_6px_rgba(0,0,0,0.25)] flex items-center justify-center">
-                        <Icon size={30} className="text-[#4b4b52]" strokeWidth={1.6} />
+                    <span className="block w-14 h-14 drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)]">
+                        <TrashIcon size={56} />
                     </span>
                 ) : (
-                    <FolderGraphic color={folder.color} />
+                    <FolderGraphic />
                 )}
             </span>
             <span className="icon-label text-[11.5px] leading-tight text-center max-w-full truncate">
@@ -44,35 +43,55 @@ export default function DesktopIcon({
     );
 }
 
-function FolderGraphic({ color = "#f6c86b" }) {
-    // A more macOS-like folder illustration (two overlapping tabs, soft shadow)
+function FolderGraphic() {
     return (
-        <span className="relative block w-16 h-14">
-            <svg viewBox="0 0 64 56" width="64" height="56" fill="none">
+        <span className="block w-14 h-[46px] drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)]">
+            <svg viewBox="0 0 56 46" width="56" height="46" fill="none">
                 <defs>
-                    <linearGradient id="lg-back" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#7dbcff" />
-                        <stop offset="100%" stopColor="#3f88d8" />
+                    <linearGradient id="f-back" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stopColor="#8fc6ff" />
+                        <stop offset="1" stopColor="#4f95dc" />
                     </linearGradient>
-                    <linearGradient id="lg-front" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#9fd0ff" />
-                        <stop offset="100%" stopColor="#4b96de" />
+                    <linearGradient id="f-front" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stopColor="#bfe1ff" stopOpacity="0.95" />
+                        <stop offset="0.55" stopColor="#7bb7ea" stopOpacity="0.95" />
+                        <stop offset="1" stopColor="#5197d8" stopOpacity="0.95" />
+                    </linearGradient>
+                    <linearGradient id="f-tab" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stopColor="#8fc6ff" />
+                        <stop offset="1" stopColor="#4788d1" />
+                    </linearGradient>
+                    <linearGradient id="f-highlight" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stopColor="white" stopOpacity="0.4" />
+                        <stop offset="1" stopColor="white" stopOpacity="0" />
                     </linearGradient>
                 </defs>
-                {/* Back panel with tab */}
+                {/* Tab (back) */}
                 <path
-                    d="M4 12 C4 9 6 7 9 7 H22 L27 11 H55 C58 11 60 13 60 16 V44 C60 47 58 49 55 49 H9 C6 49 4 47 4 44 Z"
-                    fill="url(#lg-back)"
+                    d="M2 8 C2 5.5 4 3.5 6.5 3.5 H18 C19.6 3.5 21 4.2 22 5.5 L24 8.5 H26 V13 H2 Z"
+                    fill="url(#f-tab)"
+                />
+                {/* Back panel */}
+                <path
+                    d="M2 12 C2 9.5 4 7.5 6.5 7.5 H49.5 C52 7.5 54 9.5 54 12 V40 C54 42.5 52 44.5 49.5 44.5 H6.5 C4 44.5 2 42.5 2 40 Z"
+                    fill="url(#f-back)"
                 />
                 {/* Front panel */}
                 <path
-                    d="M4 18 C4 15 6 13 9 13 H55 C58 13 60 15 60 18 V44 C60 47 58 49 55 49 H9 C6 49 4 47 4 44 Z"
-                    fill="url(#lg-front)"
+                    d="M2 15.5 C2 13 4 11 6.5 11 H49.5 C52 11 54 13 54 15.5 V40 C54 42.5 52 44.5 49.5 44.5 H6.5 C4 44.5 2 42.5 2 40 Z"
+                    fill="url(#f-front)"
                 />
-                {/* Sheen */}
+                {/* Top sheen */}
                 <path
-                    d="M4 18 C4 15 6 13 9 13 H55 C58 13 60 15 60 18 V22 H4 Z"
-                    fill="rgba(255,255,255,0.18)"
+                    d="M2 15.5 C2 13 4 11 6.5 11 H49.5 C52 11 54 13 54 15.5 V22 H2 Z"
+                    fill="url(#f-highlight)"
+                />
+                {/* Outer soft outline */}
+                <path
+                    d="M2 12 C2 9.5 4 7.5 6.5 7.5 H49.5 C52 7.5 54 9.5 54 12 V40 C54 42.5 52 44.5 49.5 44.5 H6.5 C4 44.5 2 42.5 2 40 Z"
+                    fill="none"
+                    stroke="rgba(0,0,0,0.12)"
+                    strokeWidth="0.5"
                 />
             </svg>
         </span>
