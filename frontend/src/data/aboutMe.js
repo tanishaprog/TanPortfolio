@@ -109,7 +109,7 @@ export const SPOTIFY = {
         artist: "add title & artist in data/aboutMe.js",
         art: null,
         gradient: ["#1a3d2a", "#0b8b3e"],
-        open: "https://open.spotify.com/track/4HbeGjbt7u3pvwDk1vN7P0",
+        open: "https://open.spotify.com/track/5GbVzc6Ex5LYlLJqzRQhuy",
     },
 };
 
