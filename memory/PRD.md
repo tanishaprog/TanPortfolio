@@ -82,3 +82,12 @@ Reference: https://inikaj.com
   - Spotlight search (⌘Space)
   - Menu bar dropdowns
   - Sound on dock click (optional)
+
+## Update (2026-02) — Milestone 1.2
+- Sticky Note widget is now an interactive checklist. Every item toggles on click, gets a Caveat-strikethrough when done. "Remember electrolytes + creatine" renders bold + underlined + slightly larger. Content lives in `STICKY_CHECKLIST` in `data/aboutMe.js`
+- About Me folder no longer opens a Finder window. Double-click scatters 5 personal files onto the desktop (`AboutScatter.jsx`), and auto-minimises Safari + Notes so the scatter is visible:
+  - portrait.jpg → opens in Preview.app-style window (`ImagePreviewWindow.jsx`)
+  - About Me.txt / Reading List.txt / Movies & Shows.txt → open in TextEdit-style window (`TextEditWindow.jsx`) with Helvetica body, native macOS checkboxes with strikethrough for Reading List
+  - Currently Listening → opens Spotify player (`SpotifyWindow.jsx`) with podcast + song embeds and an "Open in Spotify" fallback link
+- Contact folder removed; replaced by a "Contact Me" business-card file on the desktop (`ContactCardIcon.jsx` + `BusinessCardWindow.jsx`). Click opens a Preview-style card with portrait, roles, tagline, tappable Email (mailto:), Instagram + LinkedIn (new tab), and availability chips
+- All content lives in `data/aboutMe.js` — one file to edit everything (bio, reading list, movies, sticky, business card, portraits, spotify)

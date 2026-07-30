@@ -1,4 +1,6 @@
-// Desktop folders and their placeholder contents. Content will be filled in later.
+// Desktop folders and their placeholder contents.
+// Contact folder was replaced by a standalone "Contact Me" business-card file
+// on the desktop (see BUSINESS_CARD in data/aboutMe.js).
 
 export const FOLDERS = [
     {
@@ -7,20 +9,9 @@ export const FOLDERS = [
         icon: "folder",
         color: "#f6c86b",
         placeholder: true,
-        body: {
-            kind: "about",
-            summary:
-                "This is where a short, honest biography of Tanisha will live — how she thinks, what she cares about, and what she is currently making.",
-            sections: [
-                "Biography",
-                "Current Interests",
-                "Favourite Things",
-                "Reading",
-                "Watching",
-                "Listening",
-                "Current Projects",
-            ],
-        },
+        // About Me does NOT open a Finder window. Instead the folder icon
+        // triggers a "scatter" of personal files onto the desktop —
+        // handled in Desktop.jsx via ABOUT_SCATTER data.
     },
     {
         id: "resume",
@@ -35,23 +26,6 @@ export const FOLDERS = [
                 { name: "Resume Backup.pdf", type: "pdf", openable: false },
                 { name: "Resume Backup Backup.pdf", type: "pdf", openable: false },
                 { name: "Cover Letter.docx", type: "doc", openable: false },
-            ],
-        },
-    },
-    {
-        id: "contact",
-        name: "Contact",
-        icon: "folder",
-        color: "#f6c86b",
-        placeholder: true,
-        body: {
-            kind: "contact",
-            fields: [
-                { label: "Email", value: null },
-                { label: "LinkedIn", value: null },
-                { label: "Instagram", value: null },
-                { label: "Website", value: null },
-                { label: "Phone", value: null, optional: true },
             ],
         },
     },

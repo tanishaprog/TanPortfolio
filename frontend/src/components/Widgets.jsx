@@ -1,19 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import { Bookmark } from "lucide-react";
-import { STICKY_NOTE, PINTEREST, SUBSTACK } from "../data/widgets";
+import { PINTEREST, SUBSTACK } from "../data/widgets";
+import { STICKY_CHECKLIST } from "../data/aboutMe";
 import { SubstackIcon } from "./DockIcons";
-
-// macOS-style desktop widgets. All content is placeholder (nulls -> soft empty
-// states) until Tanisha provides content.
-// Layout on desktop: Substack (wide) → Pinterest (square) → Sticky Notes (wide)
 
 const WIDGET_SHADOW =
     "0 20px 40px -14px rgba(0,0,0,0.35), 0 4px 8px -2px rgba(0,0,0,0.12)";
 
+// ---------- Sticky Note (interactive checklist) ----------
+
+function HandBox({ checked }) {
+    // Hand-drawn box (SVG) — filled when checked
+    return (
+        <svg
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            className="shrink-0 mt-[3px]"
+        >
+            <rect
+                x="1.5"
+                y="1.5"
+                width="15"
+                height="15"
+                rx="2.2"
+                ry="2.2"
+                fill={checked ? "#8a6a10" : "transparent"}
+                stroke="#8a6a10"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            {checked && (
+                <path
+                    d="M4.5 9.4 L7.6 12.4 L13.6 5.8"
+                    fill="none"
+                    stroke="#fff8dd"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                />
+            )}
+        </svg>
+    );
+}
+
 export function StickyNoteWidget() {
+    const [items, setItems] = useState(STICKY_CHECKLIST);
+
+    const toggle = (id) =>
+        setItems((prev) =>
+            prev.map((it) => (it.id === id ? { ...it, done: !it.done } : it)),
+        );
+
     return (
         <div
-            className="w-[300px] rounded-[16px] overflow-hidden"
+            className="w-[300px] rounded-[16px] overflow-hidden select-none"
             style={{
                 background: "linear-gradient(180deg,#ffe27a 0%,#ffd24d 100%)",
                 boxShadow: WIDGET_SHADOW,
@@ -25,19 +67,40 @@ export function StickyNoteWidget() {
                     to-do · today
                 </span>
             </div>
-            <div className="p-4 pt-3 sticky-hand min-h-[110px]">
-                {STICKY_NOTE.content ? (
-                    <p>{STICKY_NOTE.content}</p>
-                ) : (
-                    <ul className="text-[#4a3a1d]/70 italic space-y-1 leading-relaxed">
-                        <li>· sticky note</li>
-                        <li>· content coming soon.</li>
-                    </ul>
-                )}
-            </div>
+            <ul className="px-3.5 pt-3 pb-3.5 space-y-[6px]">
+                {items.map((it) => {
+                    const emphasized = it.emphasized;
+                    return (
+                        <li key={it.id}>
+                            <button
+                                onClick={() => toggle(it.id)}
+                                data-testid={`sticky-item-${it.id}`}
+                                className="w-full text-left flex items-start gap-2 group"
+                                aria-pressed={it.done}
+                            >
+                                <HandBox checked={it.done} />
+                                <span
+                                    className={`sticky-hand leading-tight pt-[1px] flex-1 ${
+                                        it.done
+                                            ? "line-through decoration-[#8a6a10]/70 decoration-[1.5px] text-[#8a6a10]/60"
+                                            : "text-[#4a3a1d]"
+                                    } ${emphasized ? "font-semibold underline decoration-[#8a6a10]/70 decoration-[1.5px] underline-offset-4" : ""}`}
+                                    style={{
+                                        fontSize: emphasized ? 20 : 18,
+                                    }}
+                                >
+                                    {it.text}
+                                </span>
+                            </button>
+                        </li>
+                    );
+                })}
+            </ul>
         </div>
     );
 }
+
+// ---------- Pinterest & Substack (unchanged) ----------
 
 export function PinterestWidget() {
     return (
@@ -61,7 +124,7 @@ export function PinterestWidget() {
                 {[...Array(4)].map((_, i) => (
                     <div
                         key={i}
-                        className="aspect-square rounded-md relative overflow-hidden"
+                        className="aspect-square rounded-md"
                         style={{
                             background: `linear-gradient(160deg, ${
                                 ["#f1c0d3", "#fbd6a4", "#c8d9f2", "#d9c9f0"][i]
