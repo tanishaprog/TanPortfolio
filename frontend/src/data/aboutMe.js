@@ -87,27 +87,29 @@ export const MOVIES = [
     { title: "Call Me By Your Name" },
 ];
 
-export const MOVIES_META = {
+export const WATCHLIST_META = {
     title: "things everyone should watch once.",
     footer: "this is my list.\nplease don't judge it too hard :)",
 };
 
-// Spotify embed URLs (podcast episode + song).
-// `open` is the direct Spotify web URL as a fallback (used for the "Open in
-// Spotify" link under each embed).
+// Spotify song + podcast — compact card data (NOT an iframe embed).
+// Edit `title`, `artist`, `art` to change what shows on the cards.
 export const SPOTIFY = {
     podcast: {
-        label: "Podcast",
+        kind: "podcast",
         title: "Moment of Silence",
-        url: "https://open.spotify.com/embed/episode/1pebCgK75J7OpVLb5cAwqq",
+        artist: "podcast · episode",
+        art: null, // fallback gradient
+        gradient: ["#2b1735", "#742d5a"],
         open: "https://open.spotify.com/episode/1pebCgK75J7OpVLb5cAwqq",
-        height: 232,
     },
     song: {
-        label: "Song",
-        url: "https://open.spotify.com/embed/track/4HbeGjbt7u3pvwDk1vN7P0",
+        kind: "song",
+        title: "on repeat",
+        artist: "add title & artist in data/aboutMe.js",
+        art: null,
+        gradient: ["#1a3d2a", "#0b8b3e"],
         open: "https://open.spotify.com/track/4HbeGjbt7u3pvwDk1vN7P0",
-        height: 152,
     },
 };
 

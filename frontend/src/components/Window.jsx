@@ -28,6 +28,7 @@ export default function Window({
     className = "",
     bodyClassName = "",
     accent = null,
+    entryDelay = 0,
 }) {
     const [size, setSize] = useState({ w: width, h: height });
     const [pos, setPos] = useState({ x: initialX, y: initialY });
@@ -59,7 +60,11 @@ export default function Window({
             initial={{ opacity: 0, scale: 0.965, y: 8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 6 }}
-            transition={{ duration: 0.32, ease: EASE }}
+            transition={{
+                duration: 0.42,
+                ease: EASE,
+                delay: entryDelay,
+            }}
             onMouseDown={() => onFocus?.(id)}
             style={{
                 position: "absolute",

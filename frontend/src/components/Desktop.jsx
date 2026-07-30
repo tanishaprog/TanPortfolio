@@ -5,16 +5,15 @@ import MenuBar from "./MenuBar";
 import Dock from "./Dock";
 import DesktopIcon from "./DesktopIcon";
 import ContactCardIcon from "./ContactCardIcon";
-import { StickyNoteWidget, PinterestWidget, SubstackWidget } from "./Widgets";
+import { StickyNoteWidget } from "./Widgets";
 import SafariWindow from "./SafariWindow";
 import NotesWindow from "./NotesWindow";
 import FinderWindow from "./FinderWindow";
 import FilePreview from "./FilePreview";
-import AboutScatter from "./AboutScatter";
 import TextEditWindow from "./TextEditWindow";
 import ImagePreviewWindow from "./ImagePreviewWindow";
-import SpotifyWindow from "./SpotifyWindow";
-import BusinessCardWindow from "./BusinessCardWindow";
+import SpotifyCard from "./SpotifyCard";
+import BusinessCardOverlay from "./BusinessCardOverlay";
 import { FOLDERS } from "../data/folders";
 
 // A window has: id, type, folderId (for finder), z, minimized, plus type-specific fields.
@@ -23,12 +22,91 @@ const initialWindows = [
     { id: "notes", type: "notes", z: 4, minimized: false, x: 430, y: 100, w: 440, h: 340 },
 ];
 
+// Position spec for the six windows that appear when About Me is opened.
+// The user's brief: photo (upper left, background), aboutme.txt (center, front),
+// readinglist.txt (lower left, small), watchlist.txt (upper right, small),
+// spotify song (bottom right), podcast (upper right, near watchlist).
+const ABOUT_ME_LAYOUT = [
+    {
+        order: 0, // opens first (background layer)
+        id: "preview-about-portrait",
+        type: "preview-image",
+        src: "/portrait-about.webp",
+        name: "portrait.jpg",
+        x: 260,
+        y: 78,
+        w: 440,
+        h: 560,
+        zOffset: 1,
+    },
+    {
+        order: 1,
+        id: "textedit-aboutme",
+        type: "textedit",
+        doc: "aboutme",
+        name: "aboutme.txt",
+        x: 560,
+        y: 120,
+        w: 620,
+        h: 560,
+        zOffset: 6, // front-most
+    },
+    {
+        order: 2,
+        id: "textedit-reading",
+        type: "textedit",
+        doc: "reading",
+        name: "readinglist.txt",
+        x: 80,
+        y: 550,
+        w: 380,
+        h: 300,
+        zOffset: 2,
+    },
+    {
+        order: 3,
+        id: "textedit-watchlist",
+        type: "textedit",
+        doc: "watchlist",
+        name: "watchlist.txt",
+        x: 1240,
+        y: 90,
+        w: 340,
+        h: 300,
+        zOffset: 3,
+    },
+    {
+        order: 4,
+        id: "spotify-song",
+        type: "spotify-card",
+        variant: "song",
+        x: 1220,
+        y: 660,
+        w: 360,
+        h: 144,
+        zOffset: 4,
+    },
+    {
+        order: 5,
+        id: "spotify-podcast",
+        type: "spotify-card",
+        variant: "podcast",
+        x: 1220,
+        y: 420,
+        w: 360,
+        h: 144,
+        zOffset: 5,
+    },
+];
+
+const STAGGER = 0.1; // seconds between window entrances
+
 export default function Desktop() {
     const [selectedIcon, setSelectedIcon] = useState(null);
     const [windows, setWindows] = useState(initialWindows);
     const [zCounter, setZCounter] = useState(10);
     const [preview, setPreview] = useState(null);
-    const [aboutOpen, setAboutOpen] = useState(false);
+    const [contactCardOpen, setContactCardOpen] = useState(false);
 
     const focus = useCallback((id) => {
         setWindows((ws) => {
@@ -46,7 +124,6 @@ export default function Desktop() {
         setWindows((ws) => ws.map((w) => (w.id === id ? { ...w, minimized: true } : w)));
     }, []);
 
-    // Push a window with a stable id (focus + un-minimize if it already exists)
     const pushWindow = useCallback(
         (spec) => {
             setWindows((ws) => {
@@ -63,23 +140,48 @@ export default function Desktop() {
         [zCounter],
     );
 
+    // Open the About Me set — all six windows appear with a tiny stagger.
+    const openAboutMeSet = useCallback(() => {
+        setWindows((ws) => {
+            // Minimise Safari + Notes so the About Me set becomes the focus
+            const minimised = ws.map((w) =>
+                w.type === "safari" || w.type === "notes"
+                    ? { ...w, minimized: true }
+                    : w,
+            );
+            // Remove any previous instances of these windows so they don't stack
+            const stripIds = new Set(ABOUT_ME_LAYOUT.map((l) => l.id));
+            const cleaned = minimised.filter((w) => !stripIds.has(w.id));
+
+            const base = zCounter + 10;
+            setZCounter(base + 10);
+
+            const newWindows = ABOUT_ME_LAYOUT.map((spec) => ({
+                id: spec.id,
+                type: spec.type,
+                doc: spec.doc,
+                name: spec.name,
+                src: spec.src,
+                variant: spec.variant,
+                x: spec.x,
+                y: spec.y,
+                w: spec.w,
+                h: spec.h,
+                z: base + spec.zOffset,
+                minimized: false,
+                entryDelay: spec.order * STAGGER,
+            }));
+
+            return [...cleaned, ...newWindows];
+        });
+    }, [zCounter]);
+
     const openFolder = useCallback(
         (folderId) => {
-            // About Me is a special interaction — it scatters files onto the
-            // desktop instead of opening a Finder window.
             if (folderId === "about") {
-                setAboutOpen(true);
-                // Also minimize Safari & Notes so the scatter is visible
-                setWindows((ws) =>
-                    ws.map((w) =>
-                        w.type === "safari" || w.type === "notes"
-                            ? { ...w, minimized: true }
-                            : w,
-                    ),
-                );
+                openAboutMeSet();
                 return;
             }
-
             const id = `finder-${folderId}`;
             const idx = windows.filter((w) => w.type === "finder").length;
             pushWindow({
@@ -92,63 +194,13 @@ export default function Desktop() {
                 h: 500,
             });
         },
-        [pushWindow, windows],
+        [pushWindow, windows, openAboutMeSet],
     );
 
     const openFile = useCallback((folder, file) => {
         if (!file.openable) return;
         setPreview({ folder: folder.id, file });
     }, []);
-
-    // Open a scattered About Me file → spawn the appropriate window
-    const openScatterItem = useCallback(
-        (item) => {
-            if (item.kind === "image") {
-                pushWindow({
-                    id: `preview-${item.id}`,
-                    type: "preview-image",
-                    src: item.src,
-                    name: item.label,
-                    x: 260 + Math.random() * 80,
-                    y: 90 + Math.random() * 40,
-                    w: 540,
-                    h: 700,
-                });
-            } else if (item.kind === "text") {
-                pushWindow({
-                    id: `textedit-${item.docKind}`,
-                    type: "textedit",
-                    doc: item.docKind,
-                    name: item.label,
-                    x: 360 + Math.random() * 100,
-                    y: 100 + Math.random() * 50,
-                    w: 620,
-                    h: 560,
-                });
-            } else if (item.kind === "spotify") {
-                pushWindow({
-                    id: "spotify",
-                    type: "spotify",
-                    x: 480,
-                    y: 90,
-                    w: 660,
-                    h: 700,
-                });
-            }
-        },
-        [pushWindow],
-    );
-
-    const openContactCard = useCallback(() => {
-        pushWindow({
-            id: "business-card",
-            type: "business-card",
-            x: 400,
-            y: 90,
-            w: 760,
-            h: 620,
-        });
-    }, [pushWindow]);
 
     const handleDockClick = useCallback(
         (item) => {
@@ -200,7 +252,7 @@ export default function Desktop() {
                 if (w.type === "safari") return "safari";
                 if (w.type === "notes") return "notes";
                 if (w.type === "finder") return "finder";
-                if (w.type === "spotify") return "spotify";
+                if (w.type === "spotify-card") return "spotify";
                 if (w.type === "textedit") return "finder";
                 return null;
             }),
@@ -249,26 +301,17 @@ export default function Desktop() {
                 <ContactCardIcon
                     isSelected={selectedIcon === "contact-me"}
                     onSelect={() => setSelectedIcon("contact-me")}
-                    onOpen={openContactCard}
+                    onOpen={() => setContactCardOpen(true)}
                 />
             </div>
 
-            {/* Widgets: LEFT column — Substack (wide) → Pinterest → Sticky */}
+            {/* Sticky Notes anchored top-left — only remaining widget */}
             <div
-                className="absolute left-5 top-9 flex flex-col gap-5 z-[10]"
+                className="absolute left-5 top-9 z-[10]"
                 data-testid="desktop-widgets"
             >
-                <SubstackWidget />
-                <PinterestWidget />
                 <StickyNoteWidget />
             </div>
-
-            {/* Scattered About Me files (renders on top of windows with z=15) */}
-            {aboutOpen && (
-                <div className="absolute inset-0 z-[15]" data-testid="about-scatter-layer">
-                    <AboutScatter onOpen={openScatterItem} />
-                </div>
-            )}
 
             {/* Windows */}
             <AnimatePresence>
@@ -285,6 +328,7 @@ export default function Desktop() {
                             onFocus: focus,
                             onClose: close,
                             onMinimize: minimize,
+                            entryDelay: w.entryDelay || 0,
                         };
                         if (w.type === "safari")
                             return <SafariWindow key={w.id} {...commonProps} />;
@@ -317,10 +361,14 @@ export default function Desktop() {
                                     name={w.name}
                                 />
                             );
-                        if (w.type === "spotify")
-                            return <SpotifyWindow key={w.id} {...commonProps} />;
-                        if (w.type === "business-card")
-                            return <BusinessCardWindow key={w.id} {...commonProps} />;
+                        if (w.type === "spotify-card")
+                            return (
+                                <SpotifyCard
+                                    key={w.id}
+                                    {...commonProps}
+                                    variant={w.variant}
+                                />
+                            );
                         return null;
                     })}
             </AnimatePresence>
@@ -338,6 +386,12 @@ export default function Desktop() {
                         file={preview.file}
                         onClose={() => setPreview(null)}
                     />
+                )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+                {contactCardOpen && (
+                    <BusinessCardOverlay onClose={() => setContactCardOpen(false)} />
                 )}
             </AnimatePresence>
         </div>

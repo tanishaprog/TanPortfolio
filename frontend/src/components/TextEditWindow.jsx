@@ -6,7 +6,7 @@ import {
     READING_META,
     SHOWS,
     MOVIES,
-    MOVIES_META,
+    WATCHLIST_META,
 } from "../data/aboutMe";
 
 // TextEdit-style window. Renders one of three docs based on `doc`:
@@ -37,7 +37,7 @@ export default function TextEditWindow({ doc, name, ...props }) {
                     <div className="max-w-[560px] mx-auto px-12 py-10 text-[#1c1c1e]">
                         {doc === "aboutme" && <AboutMeDoc />}
                         {doc === "reading" && <ReadingDoc />}
-                        {doc === "movies" && <MoviesDoc />}
+                        {doc === "watchlist" && <WatchlistDoc />}
                     </div>
                 </div>
             </div>
@@ -152,7 +152,7 @@ function ReadingDoc() {
     );
 }
 
-function MoviesDoc() {
+function WatchlistDoc() {
     return (
         <div
             className="text-[14px] leading-[1.7]"
@@ -160,9 +160,9 @@ function MoviesDoc() {
                 fontFamily:
                     '"Helvetica Neue", Helvetica, Arial, sans-serif',
             }}
-            data-testid="doc-movies"
+            data-testid="doc-watchlist"
         >
-            <p className="text-[#1c1c1e]">{MOVIES_META.title}</p>
+            <p className="text-[#1c1c1e]">{WATCHLIST_META.title}</p>
             <div className="my-4 border-t border-dashed border-black/15" />
             <p className="text-[#1c1c1e] mt-4">Shows</p>
             <ul className="mt-2 space-y-[3px]">
@@ -186,7 +186,7 @@ function MoviesDoc() {
             </ul>
 
             <p className="whitespace-pre-line text-[#8a8a8f] mt-8">
-                {MOVIES_META.footer}
+                {WATCHLIST_META.footer}
             </p>
         </div>
     );
