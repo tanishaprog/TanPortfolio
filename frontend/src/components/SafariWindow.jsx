@@ -203,7 +203,7 @@ export default function SafariWindow(props) {
                                     </div>
 
                                     <h3 className="mt-[6px] text-[20px] leading-[1.3] font-normal text-[#1a0dab] group-hover:underline decoration-[#1a0dab]/70 underline-offset-2">
-                                        {project.brand} — Case Study | tanisha
+                                        {project.title} | tanisha
                                     </h3>
 
                                     <p className="text-[14px] text-[#4d5156] leading-[1.55] mt-1 max-w-[560px]">
