@@ -10,7 +10,7 @@ export const FOLDERS = [
         color: "#f6c86b",
         placeholder: true,
         // About Me does NOT open a Finder window. Instead the folder icon
-        // triggers a "scatter" of personal files onto the desktop —
+        // triggers a "scatter" of personal files onto the desktop -
         // handled in Desktop.jsx via ABOUT_SCATTER data.
     },
     {

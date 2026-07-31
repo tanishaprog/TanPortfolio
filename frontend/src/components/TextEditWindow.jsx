@@ -68,7 +68,7 @@ function AboutMeDoc() {
 }
 
 function NativeCheckbox({ checked, onChange, id }) {
-    // macOS Sonoma checkbox look — 14px rounded square, blue when checked
+    // macOS Sonoma checkbox look, 14px rounded square, blue when checked
     return (
         <button
             role="checkbox"

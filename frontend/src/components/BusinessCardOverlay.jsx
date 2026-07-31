@@ -9,7 +9,7 @@ const ICONS = {
     linkedin: Linkedin,
 };
 
-// The contact card as a floating object on the desktop — NO window chrome,
+// The contact card as a floating object on the desktop, NO window chrome,
 // NO backdrop, NO title bar. Just the card, a small dismiss ✕ outside its
 // top-right corner, and a subtle 3D tilt as the cursor moves over it.
 export default function BusinessCardOverlay({ onClose }) {
@@ -43,7 +43,7 @@ export default function BusinessCardOverlay({ onClose }) {
                 className="relative pointer-events-auto"
                 style={{ perspective: 1400 }}
             >
-                {/* Dismiss ✕ — outside top-right corner */}
+                {/* Dismiss ✕, outside top-right corner */}
                 <button
                     onClick={onClose}
                     data-testid="business-card-dismiss"
@@ -79,7 +79,7 @@ export default function BusinessCardOverlay({ onClose }) {
                         }}
                     />
                     <div className="grid grid-cols-[1fr_240px]">
-                        {/* Left column — text */}
+                        {/* Left column, text */}
                         <div className="px-10 py-9 flex flex-col">
                             <div className="text-[10.5px] uppercase tracking-[0.22em] text-[#c6a67b]">
                                 · say hi ·
@@ -151,7 +151,7 @@ export default function BusinessCardOverlay({ onClose }) {
                             </div>
                         </div>
 
-                        {/* Right column — portrait */}
+                        {/* Right column, portrait */}
                         <div className="relative bg-[#f6f2ea] border-l border-black/[0.05] p-5 flex items-center justify-center">
                             <div
                                 className="w-full aspect-[3/4] rounded-[14px] overflow-hidden bg-[#eee7d8]"

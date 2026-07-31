@@ -4,9 +4,9 @@ import React from "react";
  * High-fidelity SVG recreations of macOS app icons.
  * Each renders inside a 60x60 viewBox; the parent controls the actual size
  * via width/height on the wrapping <svg>. Icons are rendered on their own
- * squircle background — no extra tile is needed.
+ * squircle background, no extra tile is needed.
  *
- * Not official Apple assets — hand-drawn to feel unmistakably macOS while
+ * Not official Apple assets, hand-drawn to feel unmistakably macOS while
  * respecting IP. Keep proportions consistent (14px radius on 60px = ~23%).
  */
 
@@ -541,7 +541,7 @@ export function ChatGPTIcon({ size = 60 }) {
                 <Gloss id={id} />
             </defs>
             <rect width="60" height="60" rx={R} ry={R} fill={`url(#${id}-bg)`} />
-            {/* Stylised knot — hand approximation of ChatGPT wordmark */}
+            {/* Stylised knot, hand approximation of ChatGPT wordmark */}
             <g
                 transform="translate(30 30)"
                 stroke="#ffffff"

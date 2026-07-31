@@ -45,7 +45,7 @@ function BusinessCard() {
             data-testid="business-card-body"
         >
             <div className="grid grid-cols-[1fr_240px]">
-                {/* Left column — text */}
+                {/* Left column, text */}
                 <div className="px-10 py-9 flex flex-col">
                     <div className="text-[10.5px] uppercase tracking-[0.22em] text-[#c6a67b]">
                         · say hi ·
@@ -117,7 +117,7 @@ function BusinessCard() {
                     </div>
                 </div>
 
-                {/* Right column — portrait */}
+                {/* Right column, portrait */}
                 <div className="relative bg-[#f6f2ea] border-l border-black/[0.05] p-5 flex items-center justify-center">
                     <div
                         className="w-full aspect-[3/4] rounded-[14px] overflow-hidden bg-[#eee7d8]"

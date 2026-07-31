@@ -138,10 +138,10 @@ export default function MobileSafari() {
                     </div>
                     <ul className="mt-2 divide-y divide-black/5">
                         {[
-                            { label: "About Me", desc: "placeholder — coming soon" },
-                            { label: "Resume", desc: "Final Resume.pdf — coming soon" },
-                            { label: "Contact", desc: "placeholder — coming soon" },
-                            { label: "Cat Pics", desc: "gallery — coming soon" },
+                            { label: "About Me", desc: "placeholder, coming soon" },
+                            { label: "Resume", desc: "Final Resume.pdf, coming soon" },
+                            { label: "Contact", desc: "placeholder, coming soon" },
+                            { label: "Cat Pics", desc: "gallery, coming soon" },
                         ].map((link) => (
                             <li key={link.label}>
                                 <button className="w-full py-3 flex items-center gap-2 text-left">
@@ -195,7 +195,7 @@ export default function MobileSafari() {
                                 {openProject.snippet}
                             </p>
                             <div className="mt-5 text-[13px] text-[#6a6a6f] italic">
-                                Placeholder case study — the full write-up will
+                                Placeholder case study, the full write-up will
                                 land here.
                             </div>
                         </div>

@@ -35,7 +35,7 @@ If you somehow made it this far, come say hi.
 
 And thanks for spending time inside my little corner of the internet.`;
 
-// Reading list — mixture of read + unread, order stays as user provided.
+// Reading list, mixture of read + unread, order stays as user provided.
 export const READING_LIST = [
     { title: "Yellowface", done: true },
     { title: "White Nights", done: false },
@@ -92,7 +92,7 @@ export const WATCHLIST_META = {
     footer: "this is my list.\nplease don't judge it too hard :)",
 };
 
-// Spotify song + podcast — the `open` URL is the single source of truth.
+// Spotify song + podcast, the `open` URL is the single source of truth.
 // Title, artist and album art are fetched via Spotify's oembed API at runtime
 // (SpotifyCard.jsx). `gradient` is used only as a fallback while art loads.
 export const SPOTIFY = {

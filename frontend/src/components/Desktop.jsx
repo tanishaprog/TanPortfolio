@@ -23,7 +23,7 @@ const initialWindows = [
     { id: "notes", type: "notes", z: 4, minimized: false, x: 430, y: 100, w: 440, h: 340 },
 ];
 
-// Position spec for the About Me set — 4 windows: portrait (background),
+// Position spec for the About Me set, 4 windows: portrait (background),
 // aboutme.txt (center/front), spotify song + podcast (right column).
 const ABOUT_ME_LAYOUT = [
     {
@@ -115,7 +115,7 @@ export default function Desktop() {
         [zCounter],
     );
 
-    // Open the About Me set — all six windows appear with a tiny stagger.
+    // Open the About Me set, all six windows appear with a tiny stagger.
     const openAboutMeSet = useCallback(() => {
         setWindows((ws) => {
             // Minimise Safari + Notes so the About Me set becomes the focus
@@ -310,7 +310,7 @@ export default function Desktop() {
                 />
             </div>
 
-            {/* Sticky Notes anchored top-left — only remaining widget */}
+            {/* Sticky Notes anchored top-left, only remaining widget */}
             <div
                 className="absolute left-5 top-9 z-[10]"
                 data-testid="desktop-widgets"

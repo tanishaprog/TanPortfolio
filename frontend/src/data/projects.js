@@ -14,13 +14,13 @@ const project = (tabId, brand, extra = {}) => {
         brand,
         tabId,
         title: caseStudy?.campaignTitle
-            ? `${brand} — ${caseStudy.campaignTitle}`
-            : `${brand} — Case Study`,
+            ? `${brand}, ${caseStudy.campaignTitle}: Case Study`
+            : `${brand}: Case Study`,
         url: `www.tanisha.work/case/${id}`,
         snippet:
             caseStudy?.tagline ||
             extra.snippet ||
-            `A short placeholder description of the ${brand} project. Replace this with the real case study summary — key idea, the ask, and the outcome.`,
+            `A short placeholder description of the ${brand} project. Replace this with the real case study summary, the key idea, the ask, and the outcome.`,
         isPlaceholder: !caseStudy,
         caseStudy,
     };

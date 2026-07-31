@@ -1,4 +1,4 @@
-// Content for the three desktop widgets. All placeholders — will be replaced.
+// Content for the three desktop widgets. All placeholders, will be replaced.
 
 export const STICKY_NOTE = {
     // Left empty on purpose until Tanisha provides the note.

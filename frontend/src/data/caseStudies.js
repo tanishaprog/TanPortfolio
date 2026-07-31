@@ -1,5 +1,5 @@
 // Real case studies. Each is keyed to a project (id) inside data/projects.js.
-// Sections support several kinds — see ProjectModal.jsx for rendering.
+// Sections support several kinds - see ProjectModal.jsx for rendering.
 
 export const MANYAVAR_SHAADI_SHOW = {
     campaignTitle: "The Manyavar Shaadi Show",
@@ -34,14 +34,14 @@ export const MANYAVAR_SHAADI_SHOW = {
         {
             kind: "text",
             heading: "The idea",
-            body: "The Manyavar Shaadi Show is India's first wedding playbook disguised as entertainment. A 6-episode digital talk show hosted by Karan Johar, designed to offer genuine help and insights to couples planning their weddings. Each episode balances stories, expert advice, games, and takeaways — entertainment keeps people watching, education keeps them saving. Built to become a recurring seasonal IP for Manyavar.",
+            body: "The Manyavar Shaadi Show is India's first wedding playbook disguised as entertainment. A 6-episode digital talk show hosted by Karan Johar, designed to offer genuine help and insights to couples planning their weddings. Each episode balances stories, expert advice, games, and takeaways. Entertainment keeps people watching, education keeps them saving. Built to become a recurring seasonal IP for Manyavar.",
         },
         {
             kind: "bullets",
             heading: "Strategy pillars",
             bullets: [
-                "Education before promotion — if audiences genuinely learned something, Manyavar would naturally earn trust.",
-                "Think seasonally — an IP that returns every wedding season, not a one-off campaign.",
+                "Education before promotion: If audiences genuinely learned something, Manyavar would naturally earn trust.",
+                "Think seasonally: An IP that returns every wedding season, not a one-off campaign.",
                 "Entertainment keeps people watching. Education keeps people saving.",
             ],
         },
@@ -91,7 +91,7 @@ export const MANYAVAR_SHAADI_SHOW = {
                     problem: "Sangeet",
                     guests: "Neeti, Shakti & Mukti Mohan",
                     outcome:
-                        "Sangeet prep — dance, music, family coordination.",
+                        "Sangeet prep: dance, music, family coordination.",
                 },
                 {
                     n: "06",
@@ -107,11 +107,11 @@ export const MANYAVAR_SHAADI_SHOW = {
             kind: "bullets",
             heading: "Execution",
             bullets: [
-                "Creator research — 30+ guest shortlist, final casting, availability, briefing.",
-                "Production with Dharma Productions — set, visual identity, colour palette, cue cards, branding.",
-                "Guest management — briefs, wardrobe approvals, schedules, travel, vanity logistics, shoot coordination.",
-                "Host preparation — briefing, cue cards, episode notes, live production support.",
-                "Amplification — every episode designed as multiple content assets: Full Episode, Trailer, Teasers, 4-5 Short-form Reels, Creator Posts, PR Assets, Social Amplification.",
+                "Creator research: 30+ guest shortlist, final casting, availability, briefing.",
+                "Production with Dharma Productions: set, visual identity, colour palette, cue cards, branding.",
+                "Guest management: briefs, wardrobe approvals, schedules, travel, vanity logistics, shoot coordination.",
+                "Host preparation: briefing, cue cards, episode notes, live production support.",
+                "Amplification: every episode designed as multiple content assets, including Full Episode, Trailer, Teasers, 4-5 Short-form Reels, Creator Posts, PR Assets and Social Amplification.",
             ],
         },
         {

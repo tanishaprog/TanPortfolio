@@ -10,7 +10,7 @@ const WIDGET_SHADOW =
 // ---------- Sticky Note (interactive checklist) ----------
 
 function HandBox({ checked }) {
-    // Hand-drawn box (SVG) — filled when checked
+    // Hand-drawn box (SVG), filled when checked
     return (
         <svg
             width="18"

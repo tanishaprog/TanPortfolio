@@ -116,7 +116,7 @@ export default function SafariWindow(props) {
                 </button>
             </div>
 
-            {/* Content — search results (Google-style) */}
+            {/* Content, search results (Google-style) */}
             <div className="h-[calc(100%-78px)] overflow-auto mac-scroll bg-white">
                 {/* Google header */}
                 <div className="border-b border-black/[0.07] px-8 pt-5 pb-0">
@@ -203,12 +203,12 @@ export default function SafariWindow(props) {
                                     </div>
 
                                     <h3 className="mt-[6px] text-[20px] leading-[1.3] font-normal text-[#1a0dab] group-hover:underline decoration-[#1a0dab]/70 underline-offset-2">
-                                        {project.title} | tanisha
+                                        {project.title} | Tanisha
                                     </h3>
 
                                     <p className="text-[14px] text-[#4d5156] leading-[1.55] mt-1 max-w-[560px]">
                                         <span className="text-[#70757a] mr-1">
-                                            {randomDate(project.id)} —
+                                            {randomDate(project.id)},
                                         </span>
                                         {project.snippet}
                                     </p>
@@ -227,7 +227,7 @@ export default function SafariWindow(props) {
                     </div>
 
                     <div className="mt-10 pt-6 border-t border-black/[0.06] text-center text-[12px] text-[#70757a]">
-                        Page 1 of {activeTab.projects.length} · Placeholder results — real case
+                        Page 1 of {activeTab.projects.length} · Placeholder results, real case
                         studies coming soon
                     </div>
                 </div>

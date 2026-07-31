@@ -37,7 +37,7 @@ export default function FilePreview({ file, onClose }) {
                     <span className="w-3 h-3 rounded-full bg-[#febc2e]/70" />
                     <span className="w-3 h-3 rounded-full bg-[#28c840]/70" />
                     <div className="flex-1 text-center text-[12px] text-white/70 font-medium">
-                        Preview — {file.name}
+                        Preview, {file.name}
                     </div>
                     <button
                         onClick={onClose}
@@ -56,7 +56,7 @@ export default function FilePreview({ file, onClose }) {
                         </div>
                         <div className="text-[12.5px] text-[#8a8a8f] text-center px-8">
                             Placeholder. Tanisha will upload the real resume
-                            file — it will replace this preview.
+                            file, it will replace this preview.
                         </div>
                         <button className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] bg-black text-white hover:bg-[#3a3a3d]">
                             <Download size={12} /> Download (soon)

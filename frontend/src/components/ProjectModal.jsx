@@ -109,7 +109,7 @@ function RealCaseStudy({ project, cs }) {
                     <div className="mt-12 flex items-center justify-between gap-4 flex-wrap border-t border-black/5 pt-8">
                         <div className="serif text-[22px] italic text-[#3a3a3d] max-w-[420px]">
                             {cs.heroLine ||
-                                "see the whole thing — better in motion."}
+                                "see the whole thing, better in motion."}
                         </div>
                         <a
                             href={cs.cta.href}
@@ -249,7 +249,7 @@ function PlaceholderCaseStudy({ project }) {
                             <div className="text-[10.5px] uppercase tracking-wider text-[#8a8a8f]">
                                 {k}
                             </div>
-                            <div className="text-[13px] text-[#3a3a3d] mt-1">—</div>
+                            <div className="text-[13px] text-[#3a3a3d] mt-1">-</div>
                         </div>
                     ))}
                 </div>
@@ -267,7 +267,7 @@ function PlaceholderCaseStudy({ project }) {
                     <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-[#4d4d52]">
                         <li>The context and the ask</li>
                         <li>The insight and the idea</li>
-                        <li>Execution — stills, films, launches</li>
+                        <li>Execution, stills, films, launches</li>
                         <li>Outcomes and what it taught me</li>
                     </ul>
                 </section>

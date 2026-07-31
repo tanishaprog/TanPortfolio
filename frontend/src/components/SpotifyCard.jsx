@@ -4,7 +4,7 @@ import { Play, ArrowUpRight, Music } from "lucide-react";
 import { SPOTIFY } from "../data/aboutMe";
 
 // Fetches title + album art from Spotify's public oembed endpoint.
-// The Spotify URL is the single source of truth — do not hardcode metadata.
+// The Spotify URL is the single source of truth, do not hardcode metadata.
 function useSpotifyMeta(openUrl) {
     const [meta, setMeta] = useState({
         loading: true,
@@ -44,7 +44,7 @@ function useSpotifyMeta(openUrl) {
     return meta;
 }
 
-// Compact Spotify-style floating player. NOT an iframe embed — the artwork,
+// Compact Spotify-style floating player. NOT an iframe embed, the artwork,
 // title and destination URL all come from the same source (Spotify oembed).
 // `variant` = "song" | "podcast"
 export default function SpotifyCard({ variant = "song", ...props }) {

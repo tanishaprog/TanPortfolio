@@ -7,7 +7,7 @@ export const NOTES = [
         date: "Today",
         preview: "",
         kind: "empty",
-        body: "(this note is empty on purpose — tanisha will fill it in soon.)",
+        body: "(this note is empty on purpose, tanisha will fill it in soon.)",
     },
     {
         id: "grocery",
