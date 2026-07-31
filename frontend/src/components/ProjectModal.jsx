@@ -208,6 +208,45 @@ function Section({ section }) {
             </section>
         );
     }
+    if (section.kind === "deliverables") {
+        return (
+            <section>
+                <SectionHeading>{section.heading}</SectionHeading>
+                <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+                    {section.deliverables.map((d) => (
+                        <a
+                            key={d.n}
+                            href={d.href}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            data-testid={`deliverable-${d.n}`}
+                            className="group flex flex-col rounded-xl border border-black/5 bg-[#fafafb] hover:bg-white hover:border-black/10 hover:-translate-y-[2px] transition-all p-4 overflow-hidden"
+                        >
+                            <div className="flex items-baseline gap-2">
+                                <span className="serif text-[22px] text-[#c6a67b] leading-none">
+                                    {d.n}
+                                </span>
+                                <span className="text-[10.5px] uppercase tracking-[0.14em] text-[#8a8a8f]">
+                                    YouTube
+                                </span>
+                            </div>
+                            <div className="mt-2 text-[14px] font-medium text-[#1c1c1e] leading-tight">
+                                {d.title}
+                            </div>
+                            <div className="mt-2 text-[12.5px] text-[#4d5156] leading-snug">
+                                {d.description}
+                            </div>
+                            <div className="mt-4 inline-flex items-center gap-1.5 text-[12px] font-medium text-[#1c1c1e] group-hover:text-[#0a67c8]">
+                                <PlayCircle size={13} className="text-[#ff5f57] group-hover:text-[#0a67c8] transition-colors" />
+                                Watch
+                                <ArrowUpRight size={11} />
+                            </div>
+                        </a>
+                    ))}
+                </div>
+            </section>
+        );
+    }
     return null;
 }
 
