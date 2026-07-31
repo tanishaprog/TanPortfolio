@@ -12,6 +12,7 @@ import FinderWindow from "./FinderWindow";
 import FilePreview from "./FilePreview";
 import TextEditWindow from "./TextEditWindow";
 import ImagePreviewWindow from "./ImagePreviewWindow";
+import PDFPreviewWindow from "./PDFPreviewWindow";
 import SpotifyCard from "./SpotifyCard";
 import BusinessCardOverlay from "./BusinessCardOverlay";
 import { FOLDERS } from "../data/folders";
@@ -187,6 +188,20 @@ export default function Desktop() {
                 });
                 return;
             }
+            if (file.type === "pdf" && file.src) {
+                pushWindow({
+                    id: `pdf-${folder.id}-${file.name}`,
+                    type: "preview-pdf",
+                    src: file.src,
+                    driveUrl: file.driveUrl,
+                    name: file.name,
+                    x: 260 + Math.random() * 80,
+                    y: 60 + Math.random() * 30,
+                    w: 780,
+                    h: 820,
+                });
+                return;
+            }
             setPreview({ folder: folder.id, file });
         },
         [pushWindow],
@@ -349,6 +364,16 @@ export default function Desktop() {
                                     {...commonProps}
                                     src={w.src}
                                     name={w.name}
+                                />
+                            );
+                        if (w.type === "preview-pdf")
+                            return (
+                                <PDFPreviewWindow
+                                    key={w.id}
+                                    {...commonProps}
+                                    src={w.src}
+                                    name={w.name}
+                                    driveUrl={w.driveUrl}
                                 />
                             );
                         if (w.type === "spotify-card")

@@ -18,11 +18,18 @@ export const FOLDERS = [
         name: "Resume",
         icon: "folder",
         color: "#f6c86b",
-        placeholder: true,
+        placeholder: false,
         body: {
             kind: "files",
             files: [
-                { name: "Final Resume.pdf", type: "pdf", openable: true },
+                {
+                    name: "Final Resume.pdf",
+                    type: "pdf",
+                    openable: true,
+                    src: "/resume.pdf",
+                    driveUrl:
+                        "https://drive.google.com/file/d/1kx-noihHthK05OMansqdnEZ9-jzWGZim/view?usp=sharing",
+                },
                 { name: "Resume Backup.pdf", type: "pdf", openable: false },
                 { name: "Resume Backup Backup.pdf", type: "pdf", openable: false },
                 { name: "Cover Letter.docx", type: "doc", openable: false },
