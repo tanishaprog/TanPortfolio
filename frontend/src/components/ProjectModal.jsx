@@ -133,20 +133,22 @@ function RealCaseStudy({ project, cs }) {
     );
 }
 // Returns true if a case-study section has any real content in ANY of its
-// non-meta fields (anything other than `kind` and `heading`). Handles
-// null/undefined, empty strings and empty arrays generically, so future
-// section kinds (influencer, press, testimonials, performance, additional
-// assets, etc.) can be added to the data without a code change and will
-// stay hidden until they're populated.
+// non-meta fields (anything other than `kind` and `heading`). Recursively
+// checks nested arrays and objects, so a section is hidden when its content
+// fields are null/undefined, empty strings, empty arrays, empty objects, or
+// objects/arrays that only contain other empty values.
 function sectionHasContent(section) {
     if (!section) return false;
+    const hasRealContent = (value) => {
+        if (value == null) return false;
+        if (typeof value === "string") return value.trim() !== "";
+        if (Array.isArray(value)) return value.some(hasRealContent);
+        if (typeof value === "object") return Object.values(value).some(hasRealContent);
+        return true;
+    };
     for (const key of Object.keys(section)) {
         if (key === "kind" || key === "heading") continue;
-        const v = section[key];
-        if (v == null) continue;
-        if (typeof v === "string" && v.trim() === "") continue;
-        if (Array.isArray(v) && v.length === 0) continue;
-        return true;
+        if (hasRealContent(section[key])) return true;
     }
     return false;
 }

@@ -45,13 +45,13 @@ export const SAFARI_TABS = [
         favicon: "film",
         projects: [
             
+            project("ad-films", "CashKaro"),
             project("ad-films", "Keventers"),
             project("ad-films", "Smartsters"),
             project("ad-films", "Olio Pizza"),
             project("ad-films", "Airbound"),
             project("ad-films", "One8"),
-            project("ad-films", "CashKaro"),
-            project("ad-films", "Meesho"),
+            
         ],
     },
     {
