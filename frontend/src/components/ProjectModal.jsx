@@ -74,12 +74,14 @@ function RealCaseStudy({ project, cs }) {
             {/* Body */}
             <div className="px-8 md:px-10 pt-8">
                 {/* Tagline */}
-                <p className="serif italic text-[20px] leading-[1.4] text-[#3a3a3d] max-w-[640px]">
-                    {cs.tagline}
-                </p>
+                {cs.tagline && (
+                    <p className="serif italic text-[20px] leading-[1.4] text-[#3a3a3d] max-w-[640px]">
+                        {cs.tagline}
+                    </p>
+                )}
 
                 {/* Meta grid */}
-                {cs.meta && (
+                {cs.meta && cs.meta.length > 0 && (
                     <div className="mt-7 grid grid-cols-2 md:grid-cols-4 gap-3">
                         {cs.meta.map((m) => (
                             <div
@@ -97,15 +99,17 @@ function RealCaseStudy({ project, cs }) {
                     </div>
                 )}
 
-                {/* Sections */}
+                {/* Sections — only render those with actual content */}
                 <div className="mt-10 space-y-9">
-                    {cs.sections.map((s, i) => (
-                        <Section key={i} section={s} />
-                    ))}
+                    {(cs.sections || [])
+                        .filter(sectionHasContent)
+                        .map((s, i) => (
+                            <Section key={i} section={s} />
+                        ))}
                 </div>
 
                 {/* CTA */}
-                {cs.cta && (
+                {cs.cta && cs.cta.href && cs.cta.label && (
                     <div className="mt-12 flex items-center justify-between gap-4 flex-wrap border-t border-black/5 pt-8">
                         <div className="serif text-[22px] italic text-[#3a3a3d] max-w-[420px]">
                             {cs.heroLine ||
@@ -128,6 +132,25 @@ function RealCaseStudy({ project, cs }) {
         </article>
     );
 }
+// Returns true if a case-study section has any real content in ANY of its
+// non-meta fields (anything other than `kind` and `heading`). Handles
+// null/undefined, empty strings and empty arrays generically, so future
+// section kinds (influencer, press, testimonials, performance, additional
+// assets, etc.) can be added to the data without a code change and will
+// stay hidden until they're populated.
+function sectionHasContent(section) {
+    if (!section) return false;
+    for (const key of Object.keys(section)) {
+        if (key === "kind" || key === "heading") continue;
+        const v = section[key];
+        if (v == null) continue;
+        if (typeof v === "string" && v.trim() === "") continue;
+        if (Array.isArray(v) && v.length === 0) continue;
+        return true;
+    }
+    return false;
+}
+
 
 function Section({ section }) {
     if (section.kind === "text") {
@@ -236,11 +259,16 @@ function Section({ section }) {
                             <div className="mt-2 text-[12.5px] text-[#4d5156] leading-snug">
                                 {d.description}
                             </div>
-                            <div className="mt-4 inline-flex items-center gap-1.5 text-[12px] font-medium text-[#1c1c1e] group-hover:text-[#0a67c8]">
-                                <PlayCircle size={13} className="text-[#ff5f57] group-hover:text-[#0a67c8] transition-colors" />
-                                Watch
-                                <ArrowUpRight size={11} />
-                            </div>
+                            {d.href && (
+    <div className="mt-4 inline-flex items-center gap-1.5 text-[12px] font-medium text-[#1c1c1e] group-hover:text-[#0a67c8]">
+        <PlayCircle
+            size={13}
+            className="text-[#ff5f57] group-hover:text-[#0a67c8] transition-colors"
+        />
+        Watch
+        <ArrowUpRight size={11} />
+    </div>
+)}
                         </a>
                     ))}
                 </div>

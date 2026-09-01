@@ -98,10 +98,10 @@ export const NOTES = [
         id: "wishlist",
         title: "Birthday Wishlist",
         date: "27 Dec",
-        preview: "yester year, bad feminist, longchamp…",
+        preview: "yesteryear, bad feminist, longchamp…",
         kind: "list",
         body: [
-            "Yester Year",
+            "YesterYear",
             "Bad Feminist",
             "Longchamp Le Pliage (Red)",
             "YSL Libre",

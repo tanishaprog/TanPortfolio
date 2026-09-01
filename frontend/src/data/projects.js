@@ -44,8 +44,8 @@ export const SAFARI_TABS = [
         title: "Ad Films",
         favicon: "film",
         projects: [
-            project("ad-films", "Zeebu"),
-            project("ad-films", "Kevinters"),
+            
+            project("ad-films", "Keventers"),
             project("ad-films", "Smartsters"),
             project("ad-films", "Olio Pizza"),
             project("ad-films", "Airbound"),
@@ -61,7 +61,7 @@ export const SAFARI_TABS = [
         projects: [
             project("social-media", "MyFi"),
             project("social-media", "Shopsy"),
-            project("social-media", "Kevinters"),
+            project("social-media", "Keventers"),
             project("social-media", "13K"),
             project("social-media", "Manyavar"),
             project("social-media", "Thank You"),
@@ -107,4 +107,4 @@ export const SAFARI_TABS = [
     },
 ];
 
-export const SAFARI_INITIAL_TAB = "influencer";
+export const SAFARI_INITIAL_TAB = "digital";
