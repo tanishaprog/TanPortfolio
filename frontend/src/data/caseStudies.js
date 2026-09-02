@@ -1699,5 +1699,5 @@ export const CASE_STUDIES = {
     "ad-films-olio-pizza": OLIO_PIZZA,
     "ad-films-airbound": AIRBOUND,
     "ad-films-cashkaro": CASHKARO,
-    ""social-media-myfi": MYFI_ASK_MYFI,
+    "social-media-myfi": MYFI_ASK_MYFI,
    };
