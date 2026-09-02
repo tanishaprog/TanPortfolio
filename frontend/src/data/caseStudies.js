@@ -1602,7 +1602,7 @@ export const CASHKARO = {
     ],
 };
 
-export const MyFi = {
+export const MYFI_ASK_MYFI = {
     campaignTitle: "MyFi · Ask MyFi",
     tagline:
         "Building a trusted financial community first, then turning that community into an audience ready for an AI-powered financial product.",
@@ -1699,5 +1699,5 @@ export const CASE_STUDIES = {
     "ad-films-olio-pizza": OLIO_PIZZA,
     "ad-films-airbound": AIRBOUND,
     "ad-films-cashkaro": CASHKARO,
-    "social-media-myfi": ASK_MYFI,
+    ""social-media-myfi": MYFI_ASK_MYFI,
    };
