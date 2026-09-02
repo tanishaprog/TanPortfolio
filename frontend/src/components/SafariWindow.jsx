@@ -34,12 +34,24 @@ const ICONS = {
 const FILTERS = ["All", "Videos", "Images", "News", "Web", "Tools"];
 
 export default function SafariWindow(props) {
-    const [activeTabId, setActiveTabId] = useState(SAFARI_INITIAL_TAB);
+    // Only show tabs that have at least one populated case study.
+    const visibleTabs = SAFARI_TABS
+        .map((tab) => ({
+            ...tab,
+            projects: tab.projects.filter((p) => !p.isPlaceholder),
+        }))
+        .filter((tab) => tab.projects.length > 0);
+
+    const initialTabId = visibleTabs.find((t) => t.id === SAFARI_INITIAL_TAB)
+        ? SAFARI_INITIAL_TAB
+        : visibleTabs[0]?.id;
+
+    const [activeTabId, setActiveTabId] = useState(initialTabId);
     const [openProject, setOpenProject] = useState(null);
 
     const activeTab =
-        SAFARI_TABS.find((t) => t.id === activeTabId) ?? SAFARI_TABS[0];
-    const queryLabel = activeTab.title.toLowerCase();
+        visibleTabs.find((t) => t.id === activeTabId) ?? visibleTabs[0];
+    const queryLabel = activeTab?.title.toLowerCase() ?? "";
 
     return (
         <Window
@@ -57,7 +69,7 @@ export default function SafariWindow(props) {
         >
             {/* Tab strip */}
             <div className="h-8 border-b border-black/[0.08] bg-[rgba(232,232,235,0.9)] flex items-end px-2 gap-[2px] overflow-x-auto no-scrollbar">
-                {SAFARI_TABS.map((tab) => {
+                {visibleTabs.map((tab) => {
                     const Icon = ICONS[tab.favicon] ?? Globe;
                     const active = tab.id === activeTabId;
                     return (

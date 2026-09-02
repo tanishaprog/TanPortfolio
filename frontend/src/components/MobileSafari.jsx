@@ -26,10 +26,18 @@ const ICONS = {
 
 // Mobile-only view: opens directly into Safari with the portfolio.
 export default function MobileSafari() {
+    // Only show tabs that have at least one populated case study.
+    const visibleTabs = SAFARI_TABS
+        .map((tab) => ({
+            ...tab,
+            projects: tab.projects.filter((p) => !p.isPlaceholder),
+        }))
+        .filter((tab) => tab.projects.length > 0);
+
     const [dismissed, setDismissed] = useState(false);
-    const [tabId, setTabId] = useState(SAFARI_TABS[0].id);
+    const [tabId, setTabId] = useState(visibleTabs[0]?.id);
     const [openProject, setOpenProject] = useState(null);
-    const activeTab = SAFARI_TABS.find((t) => t.id === tabId) ?? SAFARI_TABS[0];
+    const activeTab = visibleTabs.find((t) => t.id === tabId) ?? visibleTabs[0];
 
     return (
         <div
@@ -76,7 +84,7 @@ export default function MobileSafari() {
 
             {/* Tabs */}
             <div className="mt-3 px-3 flex gap-2 overflow-x-auto no-scrollbar pb-1">
-                {SAFARI_TABS.map((t) => {
+                {visibleTabs.map((t) => {
                     const Icon = ICONS[t.favicon] ?? Globe;
                     const active = t.id === tabId;
                     return (

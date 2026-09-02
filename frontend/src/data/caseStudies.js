@@ -1601,6 +1601,81 @@ export const CASHKARO = {
         },
     ],
 };
+
+export const MyFi = {
+    campaignTitle: "MyFi · Ask MyFi",
+    tagline:
+        "Building a trusted financial community first, then turning that community into an audience ready for an AI-powered financial product.",
+    heroImage: "/case-myfi.png",
+    heroKicker: "MyFi · Social Media",
+    heroLine:
+        "Build trust in the conversation before asking people to trust the product.",
+    meta: [
+        { label: "Role", value: "Social Media Strategist" },
+        { label: "Client", value: "MyFi" },
+        { label: "Format", value: "Social Media & Content Strategy" },
+        { label: "Period", value: "2023–2024" },
+    ],
+    kpis: [
+        { label: "Followers", value: "15K+" },
+        { label: "First Video", value: "1M+ Organic Views" },
+        { label: "Launch Campaign", value: "6 Videos" },
+        { label: "Influencer Marketing", value: "Follow-on Mandate" },
+    ],
+    sections: [
+        {
+            kind: "text",
+            heading: "The brief",
+            body: "MyFi came in with zero followers and an AI-based chatbot at a time when AI was still relatively new and people were not as comfortable trusting AI for financial decisions. The initial challenge was to build a community that would eventually trust the product.",
+        },
+        {
+            kind: "text",
+            heading: "The strategic shift",
+            body: "Instead of trying to build a community around AI itself, we built a community around something people already cared about: financial advice. The page began as Finances Personal, creating useful and engaging finance-first content before bringing the product into the conversation.",
+        },
+        {
+            kind: "text",
+            heading: "Building from zero",
+            body: "We built the page through a mix of P2Cs, vox pops, skits, gamified formats and educational content. One of the strongest recurring formats paired a vox pop around a financial question with a follow-up piece that broke down the answer. This helped make financial concepts accessible while creating reasons for people to return to the page.",
+        },
+        {
+            kind: "text",
+            heading: "Early traction",
+            body: "The first video posted on the fresh page crossed 1M+ organic views within a few days. Within roughly two months, the page had grown from zero to around 9,000 followers through a relatively small number of posts.",
+        },
+        {
+            kind: "text",
+            heading: "Expanding the content universe",
+            body: "Once the initial community was established, we expanded beyond the finance-first content into original IPs. People Behind MyFi explored the lives and work of product managers, software development engineers, founders and other people building in the technology ecosystem. Debunking Myths tackled misconceptions around finance, AI and chatbots.",
+        },
+        {
+            kind: "text",
+            heading: "From community to product",
+            body: "Over roughly four to five months, the page grew to around 15,000 followers. Once the community was established, the brand transitioned from Finances Personal to Ask MyFi and began gradually introducing the product and its upcoming launch.",
+        },
+        {
+            kind: "text",
+            heading: "The pause",
+            body: "The product development and deployment timeline meant the client was not yet ready to launch. Rather than forcing product-led content prematurely, the posting activity was paused while the community was kept engaged through lighter interaction and engagement-led activity.",
+        },
+        {
+            kind: "text",
+            heading: "The 2024 launch",
+            body: "When MyFi returned with the product ready in 2024, we planned a six-video launch campaign designed to create multiple spikes of attention around the launch. We also created a motion-graphics-led how-to film that demonstrated how to interact with the product and made the experience easier to understand.",
+        },
+        {
+            kind: "text",
+            heading: "Beyond social",
+            body: "The social media work eventually opened up a larger influencer marketing mandate for MyFi. The community-building and launch work became the foundation for a broader influencer campaign.",
+        },
+        {
+            kind: "text",
+            heading: "Outcome",
+            body: "Starting from zero, MyFi's social presence grew into a 15K+ community, with the first fresh-page video crossing 1M+ organic views. The work established a finance-first audience, created original content IPs, supported the eventual product launch and led into a larger influencer marketing engagement.",
+        },
+    ],
+};
+
 // Registry so projects.js can attach case studies without circular imports.
 // A single case study can be attached to multiple project ids (e.g. One8 lives
 // in both Ad Films and Digital Campaigns tabs).
@@ -1624,4 +1699,5 @@ export const CASE_STUDIES = {
     "ad-films-olio-pizza": OLIO_PIZZA,
     "ad-films-airbound": AIRBOUND,
     "ad-films-cashkaro": CASHKARO,
+    "social-media-myfi": ASK_MYFI,
    };
